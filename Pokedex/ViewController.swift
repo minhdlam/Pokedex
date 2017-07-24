@@ -13,12 +13,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var topBar: UIView!
     
     var pokemons = [Pokemon]()
     var filteredPokemons = [Pokemon]()
     var inSearchMode: Bool = false
     var musicPlayer: AVAudioPlayer!
-    
     
     
     override func viewDidLoad() {
@@ -28,13 +28,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
         
         parsePokemonCSV()
         playAudio()
     }
-    
+    func keyboardDidShow(notification: NSNotification) {
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        topBar.addGestureRecognizer(tap)
+        
+    }
     func playAudio() {
         let path = Bundle.main.path(forResource: "music", ofType: "mp3")!
         do {
@@ -86,6 +92,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        var pokemon: Pokemon!
+        if inSearchMode {
+            pokemon = filteredPokemons[indexPath.row]
+            
+        } else {
+            pokemon = pokemons[indexPath.row]
+        }
+        performSegue(withIdentifier: "PokemonViewToPokemonDetails", sender: pokemon)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if inSearchMode {
@@ -105,7 +119,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if searchBar.text == nil || searchBar.text == "" {
             inSearchMode = false
             collection.reloadData()
-            view.endEditing(true)
+            dismissKeyboard()
         } else {
             inSearchMode = true
             let lowercase = searchBar.text!.lowercased()
@@ -115,10 +129,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        view.endEditing(true)
+        dismissKeyboard()
     }
     func dismissKeyboard() {
         view.endEditing(true)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PokemonViewToPokemonDetails" {
+            if let detailsVC = segue.destination as? PokemonDetailVC {
+                if let pokemon = sender as? Pokemon {
+                    detailsVC.pokemon = pokemon
+                }
+            }
+            
+        }
     }
     @IBAction func musicButtonPressed(_ sender: UIButton) {
         
