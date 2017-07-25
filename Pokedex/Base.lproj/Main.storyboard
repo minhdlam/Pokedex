@@ -172,6 +172,9 @@
                                             <constraint firstAttribute="width" constant="35" id="qxY-sw-PRd"/>
                                         </constraints>
                                         <state key="normal" image="back"/>
+                                        <connections>
+                                            <action selector="backBtnPressed:" destination="B7d-7p-EYj" eventType="touchUpInside" id="v1m-zV-Rqo"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Charmander" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hh-Jd-az5">
                                         <rect key="frame" x="106.66666666666669" y="36" width="200" height="21"/>
@@ -420,6 +423,20 @@
                             <constraint firstItem="ttp-DK-O09" firstAttribute="leading" secondItem="94o-61-dXv" secondAttribute="leading" id="x6D-h3-3BM"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="attackLbl" destination="R8z-fT-Slo" id="pZm-x5-sg9"/>
+                        <outlet property="currentEvolutionImg" destination="RBO-HF-OMK" id="D4k-d9-XET"/>
+                        <outlet property="defenseLbl" destination="wlH-9V-OfX" id="n5r-Xy-8h0"/>
+                        <outlet property="descriptionLbl" destination="Ri9-tz-MKc" id="ob6-A8-3tS"/>
+                        <outlet property="evolutionLbl" destination="v3M-wx-d5S" id="b4c-hr-Wxj"/>
+                        <outlet property="heightLbl" destination="1rD-te-WQo" id="xHD-Nb-gSj"/>
+                        <outlet property="nameLbl" destination="9hh-Jd-az5" id="fGV-FS-x5F"/>
+                        <outlet property="nextEvolutionImg" destination="mM0-OC-lyG" id="Vet-dT-Jxz"/>
+                        <outlet property="pokedexIdlLbl" destination="FyR-bY-QGk" id="qqU-rC-qnF"/>
+                        <outlet property="pokemonImg" destination="cr8-Vf-gR4" id="J6u-8V-A5i"/>
+                        <outlet property="typeLbl" destination="byY-We-7K1" id="VwH-DI-Vg3"/>
+                        <outlet property="weightLbl" destination="zg5-4V-om5" id="oqL-70-g05"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pFB-ku-Plc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
